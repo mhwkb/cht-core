@@ -27,6 +27,7 @@ import { TranslateFromService } from '@mm-services/translate-from.service';
 import { CountMessageService } from '@mm-services/count-message.service';
 import { PrivacyPoliciesService } from '@mm-services/privacy-policies.service';
 import { LanguageService, SetLanguageService } from '@mm-services/language.service';
+import {StartupModalsService} from '@mm-services/startup-modals.service';
 
 const SYNC_STATUS = {
   inProgress: {
@@ -95,7 +96,8 @@ export class AppComponent {
     private translateFromService:TranslateFromService,
     private changeDetectorRef: ChangeDetectorRef,
     private countMessageService: CountMessageService,
-    private privacyPoliciesService: PrivacyPoliciesService
+    private privacyPoliciesService: PrivacyPoliciesService,
+    private startupModalsService: StartupModalsService,
   ) {
     this.globalActions = new GlobalActions(store);
 
@@ -316,6 +318,8 @@ export class AppComponent {
     this.countMessageService.init();
     this.checkPrivacyPolicy();
     this.initForms();
+
+    this.startupModalsService.showStartupModals();
   }
 
   private initForms() {
