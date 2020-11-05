@@ -360,6 +360,7 @@ module.exports = function(grunt) {
           ];
           const ignore = [
             'webapp/src/js/modules/xpath-element-path.js',
+            'webapp/src/ts/bootstrap-tour-standalone.js',
             'api/src/extracted-resources/**/*',
             'api/build/**/*',
             '**/node_modules/**',

@@ -20,6 +20,7 @@ import { Selectors } from '@mm-selectors/index';
 import { ComponentsModule } from '@mm-components/components.module';
 import { PlaceHierarchyService } from '@mm-services/place-hierarchy.service';
 import { NavigationComponent } from '@mm-components/navigation/navigation.component';
+import { TourService } from '@mm-services/tour.service';
 
 describe('Reports Component', () => {
   let component: ReportsComponent;
@@ -43,6 +44,9 @@ describe('Reports Component', () => {
       { selector: Selectors.getEnketoEditedStatus, value: false },
       { selector: Selectors.getEnketoSavingStatus, value: false },
     ];
+    const tourServiceMock = {
+      start: (name) => {}
+    };
 
     TestBed
       .configureTestingModule({
@@ -65,7 +69,8 @@ describe('Reports Component', () => {
           { provide: AddReadStatusService, useValue: { updateReports: sinon.stub().resolvesArg(0) }},
           { provide: SearchService, useValue: { search: sinon.stub().resolves([]) } },
           { provide: SettingsService, useValue: {} }, // Needed because of ngx-translate provider's constructor.
-          { provide: PlaceHierarchyService, useValue: { get: sinon.stub().resolves() } }, // Needed because of facility filter
+          { provide: PlaceHierarchyService, useValue: { get: sinon.stub().resolves() } }, // Needed because of facility filter,
+          { provide: TourService, useValue: tourServiceMock }
         ]
       })
       .compileComponents()
