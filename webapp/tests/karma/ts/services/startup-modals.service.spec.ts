@@ -23,45 +23,40 @@ describe('StartupModalsService', () => {
     sinon.restore();
   });
 
-  function getProviders(toursResult) {
-    return [
-      {
-        provide: SessionService,
-        useValue: { userCtx: () => ({ name: 'no_error' }), isOnlineOnly: () => true }
-      },
-      { provide: SettingsService, useValue: { get: () => ({ setup_complete: true }) } },
-      { provide: UserSettingsService, useValue: { get: ()=> ({ name: 'person' }) } },
-      { provide: UpdateUserService, useValue: { update: sinon.stub().resolves() } },
-      { provide: ModalService, useValue: { show: sinon.stub() } },
-      { provide: TourService, useValue: { getTours: sinon.stub().resolves(toursResult) } },
-    ]
-  }
-
-  function injectService() {
-    service = TestBed.inject(StartupModalsService);
-    sessionService = TestBed.inject(SessionService);
-    updateUserService = TestBed.inject(UpdateUserService);
-    modalService = TestBed.inject(ModalService);
-    tourService = TestBed.inject(TourService);
-  }
-
   describe('showStartupModals', () => {
 
-    it('Tour modal should not be displayed if no tours are available', async () => {
+    beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: getProviders([]),
+        providers: [
+          {
+            provide: SessionService,
+            useValue: { userCtx: () => ({ name: 'no_error' }), isOnlineOnly: () => true }
+          },
+          { provide: SettingsService, useValue: { get: () => ({ setup_complete: true }) } },
+          { provide: UserSettingsService, useValue: { get: ()=> ({ name: 'person' }) } },
+          { provide: UpdateUserService, useValue: { update: sinon.stub().resolves() } },
+          { provide: ModalService, useValue: { show: sinon.stub() } },
+          { provide: TourService, useValue: { getTours: sinon.stub() } },
+        ],
       });
-      injectService();
+      service = TestBed.inject(StartupModalsService);
+      sessionService = TestBed.inject(SessionService);
+      updateUserService = TestBed.inject(UpdateUserService);
+      modalService = TestBed.inject(ModalService);
+      tourService = TestBed.inject(TourService);
+    });
+
+    it('Tour modal should not be displayed if no tours are available', async () => {
+      tourService = TestBed.inject(TourService);
+      tourService.getTours.resolves([]);
       await service.showStartupModals();
       expect(modalService.show.callCount).to.equal(0);
       expect(updateUserService.update.callCount).to.equal(0);
     });
 
     it('Tour modal should be displayed if tours are available', async () => {
-      TestBed.configureTestingModule({
-        providers: getProviders([{ order: 1, id: 'tasks', icon: 'fa-flag', name: 'Tasks' }]),
-      });
-      injectService();
+      tourService = TestBed.inject(TourService);
+      tourService.getTours.resolves([{ order: 1, id: 'tasks', icon: 'fa-flag', name: 'Tasks' }]);
       await service.showStartupModals();
       expect(modalService.show.callCount).to.equal(1);
       expect(updateUserService.update.callCount).to.equal(1);
