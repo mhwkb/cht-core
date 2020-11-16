@@ -132,6 +132,8 @@ export class AppComponent implements OnInit {
     };
 
     this.router.events.subscribe((event:RouterEvent) => {
+      console.log(event);
+
       if (event instanceof ActivationEnd) {
         const tab = getTab(event.snapshot);
         if (tab !== this.currentTab) {
