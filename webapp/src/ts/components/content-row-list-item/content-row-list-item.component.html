@@ -1,6 +1,6 @@
 <li attr.data-record-id="{{id}}"
     [routerLink]="id"
-    routerLinkActive="selected"
+    [class.selected] = "selected"
     [class.primary]="primary"
     [class.unread]="unread"
     [class.dod]="dod"
