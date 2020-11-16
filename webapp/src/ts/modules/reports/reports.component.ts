@@ -1,5 +1,5 @@
 import { find as _find, assignIn as _assignIn } from 'lodash-es';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatest, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -55,6 +55,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
     private translateService:TranslateService,
     private addReadStatusService:AddReadStatusService,
     private exportService:ExportService,
+    private ngZone:NgZone,
   ) {
     this.globalActions = new GlobalActions(store);
     this.reportsActions = new ReportsActions(store);
@@ -247,12 +248,11 @@ export class ReportsComponent implements OnInit, OnDestroy {
         });
         const $link = $(e.target).closest('a');
         $link.addClass('mm-icon-disabled');
-        // todo in the PR that will migrate full functionality of the actionbar
-        // ideally, this should be a new redux action + reducer instead of jquery and timeout
-        /*$timeout(function() {
-         $link.removeClass('mm-icon-disabled');
-         }, 2000);*/
-
+        this.ngZone.runOutsideAngular(() => {
+          setTimeout(() => {
+            $link.removeClass('mm-icon-disabled');
+          }, 2000);
+        });
         this.exportService.export('reports', exportFilters, { humanReadable: true });
       },
     });

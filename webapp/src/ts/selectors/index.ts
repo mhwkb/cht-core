@@ -14,6 +14,7 @@ export const Selectors = {
   getReplicationStatus: createSelector(getGlobalState, (globalState) => globalState.replicationStatus),
   getAndroidAppVersion:  createSelector(getGlobalState, (globalState) => globalState.androidAppVersion),
   getCurrentTab: createSelector(getGlobalState, (globalState) => globalState.currentTab),
+  getSnapshotData: createSelector(getGlobalState, (globalState) => globalState.snapshotData),
   getSnackbarContent: createSelector(getGlobalState, (globalState) => globalState.snackbarContent),
   getLoadingContent: createSelector(getGlobalState, (globalState) => globalState.loadingContent),
   getMinimalTabs: createSelector(getGlobalState, (globalState) => globalState.minimalTabs),
@@ -59,6 +60,7 @@ export const Selectors = {
   getSelectedReportsDocs: createSelector(getReportsState, (reportsState) => {
     return reportsState.selected?.map(item => item.doc || item.summary);
   }),
+  getVerifyingReport: createSelector(getReportsState, (reportsState) => reportsState.getVerifyingReport),
 
   // messages
   getMessagesError: createSelector(getMessagesState, (messagesState) => messagesState.error),
@@ -71,9 +73,6 @@ export const Selectors = {
 /*
 
 // Global
-const getActionBar = state => getGlobalState(state).actionBar;
-
-const getLoadingSubActionBar = state => getGlobalState(state).loadingSubActionBar;
 
 const getUnreadCount = state => getGlobalState(state).unreadCount;
 
@@ -92,12 +91,6 @@ const getSelectedContactDoc = reselect.createSelector(
   selected => selected && selected.doc
 );
 
-// Messages
-const getMessagesState = state => state.messages;
-const getMessagesError = state => getMessagesState(state).error;
-const getSelectedConversation = state => getMessagesState(state).selected;
-const getConversations = state => getMessagesState(state).conversations;
-
 // Reports
 const getReportsState = state => state.reports;
 const getSelectedReports = state => getReportsState(state).selected;
@@ -106,7 +99,6 @@ const getSelectedReportsValidChecks = reselect.createSelector(
   selected => selected.map(item => item.summary && item.summary.valid || item.formatted &&
     !(item.formatted.errors && item.formatted.errors.length))
 );
-const getVerifyingReport = state => getReportsState(state).verifyingReport;
 
 // Tasks
 const getTasksState = state => state.tasks;
@@ -122,10 +114,7 @@ const getTargetAggregatesError = state => getTargetAggregatesState(state).error;
 
 angular.module('inboxServices').constant('Selectors', {
   getGlobalState,
-  getActionBar,
   getAndroidAppVersion,
-  getLoadingSubActionBar,
-  getShowActionBar,
   getUnreadCount,
 
   getAnalyticsState,
@@ -138,15 +127,8 @@ angular.module('inboxServices').constant('Selectors', {
   getSelectedContact,
   getSelectedContactDoc,
 
-  getMessagesState,
-  getMessagesError,
-  getSelectedConversation,
-  getConversations,
-
   getReportsState,
   getSelectedReportsValidChecks,
-  getSelectedReportsDocs,
-  getVerifyingReport,
 
   getTasksState,
   getSelectedTask,
