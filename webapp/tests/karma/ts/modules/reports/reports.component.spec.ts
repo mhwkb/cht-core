@@ -21,7 +21,6 @@ import { Selectors } from '@mm-selectors/index';
 import { ComponentsModule } from '@mm-components/components.module';
 import { PlaceHierarchyService } from '@mm-services/place-hierarchy.service';
 import { NavigationComponent } from '@mm-components/navigation/navigation.component';
-import { remove } from 'lodash-es';
 
 describe('Reports Component', () => {
   let component: ReportsComponent;
