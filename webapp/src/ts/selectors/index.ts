@@ -60,7 +60,12 @@ export const Selectors = {
   getSelectedReportsDocs: createSelector(getReportsState, (reportsState) => {
     return reportsState.selected?.map(item => item.doc || item.summary);
   }),
-  getVerifyingReport: createSelector(getReportsState, (reportsState) => reportsState.getVerifyingReport),
+  getVerifyingReport: createSelector(getReportsState, (reportsState) => reportsState.verifyingReport),
+  getSelectedReportsValidChecks: createSelector(getReportsState, (reportsState) => {
+    return reportsState.selected?.map(item => {
+      return item.summary?.valid || !item.formatted?.errors?.length;
+    });
+  }),
 
   // messages
   getMessagesError: createSelector(getMessagesState, (messagesState) => messagesState.error),
@@ -91,14 +96,6 @@ const getSelectedContactDoc = reselect.createSelector(
   selected => selected && selected.doc
 );
 
-// Reports
-const getReportsState = state => state.reports;
-const getSelectedReports = state => getReportsState(state).selected;
-const getSelectedReportsValidChecks = reselect.createSelector(
-  getSelectedReports,
-  selected => selected.map(item => item.summary && item.summary.valid || item.formatted &&
-    !(item.formatted.errors && item.formatted.errors.length))
-);
 
 // Tasks
 const getTasksState = state => state.tasks;
@@ -126,9 +123,6 @@ angular.module('inboxServices').constant('Selectors', {
   getLoadingSelectedContactReports,
   getSelectedContact,
   getSelectedContactDoc,
-
-  getReportsState,
-  getSelectedReportsValidChecks,
 
   getTasksState,
   getSelectedTask,
