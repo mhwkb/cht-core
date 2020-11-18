@@ -15,6 +15,7 @@ import { UpdatePasswordComponent } from './edit-user/update-password.component';
 import { EditUserSettingsComponent } from './edit-user/edit-user-settings.component';
 import { NavigationConfirmComponent } from '@mm-modals/navigation-confirm/navigation-confirm.component';
 import { BulkDeleteConfirmComponent } from '@mm-modals/bulk-delete-confirm/bulk-delete-confirm.component';
+import { EditReportComponent } from '@mm-modals/edit-report/edit-report.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { BulkDeleteConfirmComponent } from '@mm-modals/bulk-delete-confirm/bulk-
     EditUserSettingsComponent,
     NavigationConfirmComponent,
     BulkDeleteConfirmComponent,
+    EditReportComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +47,7 @@ import { BulkDeleteConfirmComponent } from '@mm-modals/bulk-delete-confirm/bulk-
     EditUserSettingsComponent,
     NavigationConfirmComponent,
     BulkDeleteConfirmComponent,
+    EditReportComponent,
   ]
 })
 export class ModalsModule { }
