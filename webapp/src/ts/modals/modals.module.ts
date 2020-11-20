@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 import { MmModal } from './mm-modal/mm-modal';
+import { PipesModule } from '@mm-pipes/pipes.module';
 import { ReloadingComponent } from './reloading/reloading.component';
 import { LogoutConfirmComponent } from './logout/logout-confirm.component';
 import { FeedbackComponent } from './feedback/feedback.component';
@@ -16,6 +17,7 @@ import { EditUserSettingsComponent } from './edit-user/edit-user-settings.compon
 import { NavigationConfirmComponent } from '@mm-modals/navigation-confirm/navigation-confirm.component';
 import { TourSelectComponent } from './tour/tour-select.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { CheckDateComponent } from '@mm-modals/check-date/check-date.component';
 
 
 @NgModule({
@@ -32,12 +34,14 @@ import { WelcomeComponent } from './welcome/welcome.component';
     NavigationConfirmComponent,
     TourSelectComponent,
     WelcomeComponent,
+    CheckDateComponent,
   ],
   imports: [
     CommonModule,
     TranslateModule,
     FormsModule,
     AccordionModule,
+    PipesModule,
   ],
   exports: [
     ReloadingComponent,
@@ -48,6 +52,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
     NavigationConfirmComponent,
     TourSelectComponent,
     WelcomeComponent,
+    CheckDateComponent,
   ]
 })
 export class ModalsModule { }

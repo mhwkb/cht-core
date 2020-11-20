@@ -29,6 +29,7 @@ import { PrivacyPoliciesService } from '@mm-services/privacy-policies.service';
 import { LanguageService, SetLanguageService } from '@mm-services/language.service';
 import { StartupModalsService } from '@mm-services/startup-modals.service';
 import { TourService } from '@mm-services/tour.service';
+import { CheckDateService } from '@mm-services/check-date.service';
 
 const SYNC_STATUS = {
   inProgress: {
@@ -99,6 +100,7 @@ export class AppComponent implements OnInit {
     private privacyPoliciesService: PrivacyPoliciesService,
     private startupModalsService: StartupModalsService,
     private tourService: TourService,
+    private checkDateService: CheckDateService,
   ) {
     this.globalActions = new GlobalActions(store);
 
@@ -336,7 +338,8 @@ export class AppComponent implements OnInit {
           // policy component after the user accepts the terms
           this.startupModalsService.showStartupModals();
         }
-      });
+      })
+      .then(() => this.checkDateService.check());
     this.initForms();
   }
 
